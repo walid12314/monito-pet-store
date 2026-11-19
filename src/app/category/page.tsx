@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { CategoryBanner } from "@/components/CategoryBanner";
+import { CategoryCatalog } from "@/components/CategoryCatalog";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function CategoryPage() {
     <main className="min-h-screen bg-[#FDFDFD]">
       <Navbar />
       <CategoryBanner />
+      <CategoryCatalog />
       <Footer />
     </main>
   );
