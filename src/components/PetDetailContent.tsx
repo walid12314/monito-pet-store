@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FEATURED_PETS } from "@/components/PetShowcase";
+import { MonitoChatTrigger } from "@/components/MonitoChatDrawer";
 
 const SHIBA_GALLERY_IMAGES = [
   "/images/detail/shiba-1.png",
@@ -160,9 +161,9 @@ export function PetDetailContent({ slug }: { slug?: string }) {
               </div>
             </div>
 
-            {/* Health & Identification Guarantee Bar (108:1536 — "Frame 108"): 560x48, rounded-[10px], px-[12px] py-[9px] */}
+            {/* Health & Identification Guarantee Bar (Desktop: 108:1536 — "Frame 108", 560x48) */}
             <div
-              className="flex flex-col sm:flex-row sm:items-center justify-between w-full min-h-[48px] rounded-[10px] px-[12px] py-[9px] gap-3"
+              className="hidden lg:flex flex-row items-center justify-between w-full min-h-[48px] rounded-[10px] px-[12px] py-[9px] gap-3"
               style={{
                 background:
                   "linear-gradient(102.87deg, #FCEED5 6.43%, #FCEED5 78.33%, #FFE7BA 104.24%)",
@@ -236,8 +237,8 @@ export function PetDetailContent({ slug }: { slug?: string }) {
               </div>
             </div>
 
-            {/* Social Share Row (108:1605 — "Frame 112"): px-[10px] py-[6px], gap-[21px] */}
-            <div className="flex items-center gap-[21px] px-[10px] py-[6px]">
+            {/* Social Share Row (Desktop: 108:1605 — "Frame 112"): px-[10px] py-[6px], gap-[21px] */}
+            <div className="hidden lg:flex items-center gap-[21px] px-[10px] py-[6px]">
               <div className="inline-flex items-center gap-[8px] text-[#002A48]">
                 <svg
                   width="20"
@@ -399,32 +400,47 @@ export function PetDetailContent({ slug }: { slug?: string }) {
                 Contact us
               </Link>
 
-              {/* Chat with Monito Outline Button (117:1729): min-w-[217px] h-[44px], 2px border #002A48, rounded-[57px] */}
+              {/* Chat with Monito Outline Button (117:1729): Opens Live Chat Drawer pre-filled with current pet */}
+              <MonitoChatTrigger
+                item={{
+                  type: "pet",
+                  name: petName,
+                  sku: "SKU #1000078",
+                  price: petPrice,
+                  image: SHIBA_GALLERY_IMAGES[activeImageIdx],
+                }}
+              />
+            </div>
+
+            {/* Mobile "Information" + "Share" Row (Figma 117:1753: 382x40 above Spec Table) */}
+            <div className="flex lg:hidden items-center justify-between w-full pt-2">
+              <span className="text-[18px] leading-[24px] font-bold text-[#00171F]">
+                Information
+              </span>
               <button
                 type="button"
-                className="inline-flex items-center justify-center whitespace-nowrap min-w-[217px] h-[44px] pt-[14px] pb-[10px] pl-[24px] pr-[28px] gap-[10px] rounded-[57px] border-[2px] border-[#002A48] hover:bg-[#002A48]/5 text-[16px] leading-[24px] font-bold text-[#002A48] transition-colors shrink-0 cursor-pointer"
+                className="inline-flex items-center gap-[8px] text-[14px] leading-[20px] font-bold text-[#002A48]"
               >
                 <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
-                  className="w-[24px] h-[24px] shrink-0"
+                  className="w-[20px] h-[20px]"
                 >
+                  <circle cx="14.5" cy="4.5" r="2.2" stroke="#002A48" strokeWidth="1.6" />
+                  <circle cx="5.5" cy="10" r="2.2" stroke="#002A48" strokeWidth="1.6" />
+                  <circle cx="14.5" cy="15.5" r="2.2" stroke="#002A48" strokeWidth="1.6" />
                   <path
-                    d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.4876 3.36093 14.891 4 16.1272L3 21L7.8728 20C9.10904 20.6391 10.5124 21 12 21Z"
+                    d="M7.5 8.8L12.5 5.7M7.5 11.2L12.5 14.3"
                     stroke="#002A48"
-                    strokeWidth="2"
+                    strokeWidth="1.6"
                     strokeLinecap="round"
-                    strokeLinejoin="round"
                   />
-                  <circle cx="8.5" cy="12" r="1.2" fill="#002A48" />
-                  <circle cx="12" cy="12" r="1.2" fill="#002A48" />
-                  <circle cx="15.5" cy="12" r="1.2" fill="#002A48" />
                 </svg>
-                <span>Chat with Monito</span>
+                <span>Share</span>
               </button>
             </div>
 
@@ -448,6 +464,26 @@ export function PetDetailContent({ slug }: { slug?: string }) {
                 </dd>
               </div>
             </dl>
+
+            {/* Mobile Guarantee Card Below Spec Table (Figma 114:1585: 382x96, stacked vertically) */}
+            <div
+              className="flex lg:hidden flex-col justify-center w-full rounded-[10px] p-[12px] gap-[8px]"
+              style={{
+                background:
+                  "linear-gradient(102.87deg, #FCEED5 6.43%, #FCEED5 78.33%, #FFE7BA 104.24%)",
+              }}
+            >
+              <div className="flex items-center gap-[9px]">
+                <span className="text-[14px] leading-[20px] font-bold text-[#002A48]">
+                  ✓ 100% health guarantee for pets
+                </span>
+              </div>
+              <div className="flex items-center gap-[9px]">
+                <span className="text-[14px] leading-[20px] font-bold text-[#002A48]">
+                  ✓ 100% guarantee of pet identification
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -529,8 +565,8 @@ export function PetDetailContent({ slug }: { slug?: string }) {
           </h2>
         </div>
 
-        {/* 4-Card Row (108:1630, 108:1633, 108:1637, 108:1641): 4 × 280x378, 20px gap */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] justify-items-center">
+        {/* 4-Card Row (108:1630, 108:1633, 108:1637, 108:1641): 2 cols on mobile (12px gap), 4 × 280x378 on desktop (20px gap) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-[12px] sm:gap-[20px] justify-items-center">
           {FEATURED_PETS.slice(0, 4).map((pet) => (
             <article
               key={pet.id}
@@ -544,13 +580,13 @@ export function PetDetailContent({ slug }: { slug?: string }) {
                   src={pet.image}
                   alt={`${pet.code} - ${pet.name}`}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 264px"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 264px"
                   className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                 />
               </Link>
 
-              <div className="flex flex-col w-full pt-[8px] px-[8px] pb-[20px] gap-[4px]">
-                <h3 className="text-[16px] leading-[24px] font-bold text-[#00171F] truncate">
+              <div className="flex flex-col w-full pt-[4px] sm:pt-[8px] px-[4px] sm:px-[8px] pb-[12px] sm:pb-[20px] gap-[4px]">
+                <h3 className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold text-[#00171F] line-clamp-2 sm:truncate">
                   <Link
                     href={`/pets/${pet.slug}`}
                     className="hover:text-[#003459] transition-colors"
@@ -559,18 +595,18 @@ export function PetDetailContent({ slug }: { slug?: string }) {
                   </Link>
                 </h3>
 
-                <div className="flex flex-wrap items-center gap-[4px] text-[12px] leading-[18px] text-[#667479]">
-                  <div className="inline-flex items-start gap-[6px]">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-[2px] sm:gap-[4px] text-[12px] leading-[18px] text-[#667479]">
+                  <div className="inline-flex items-start gap-[4px] sm:gap-[6px]">
                     <span className="font-medium">Gene:</span>
                     <span className="font-bold">{pet.gene}</span>
                   </div>
                   <span
                     aria-hidden="true"
-                    className="inline-flex items-center justify-center w-[18px] h-[18px] font-medium text-[#667479]"
+                    className="hidden sm:inline-flex items-center justify-center w-[18px] h-[18px] font-medium text-[#667479]"
                   >
                     •
                   </span>
-                  <div className="inline-flex items-start gap-[5px]">
+                  <div className="inline-flex items-start gap-[4px] sm:gap-[5px]">
                     <span className="font-medium">Age:</span>
                     <span className="font-bold">{pet.age}</span>
                   </div>

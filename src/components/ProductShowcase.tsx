@@ -249,8 +249,8 @@ export function ProductShowcase() {
         </Link>
       </div>
 
-      {/* 8-Card Grid (Frame 54 & Frame 55): 4 cols × 2 rows, 20px gap */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] justify-items-center">
+      {/* 8-Card Grid (Frame 54 & Frame 55): 2 cols on mobile (12px gap), 4 cols × 2 rows on desktop (20px gap) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[12px] sm:gap-[20px] justify-items-center">
         {PRODUCTS_DATA.map((product) => (
           <article
             key={product.id}
@@ -263,10 +263,12 @@ export function ProductShowcase() {
             >
               {product.imageSizePx ? (
                 <div
-                  className="relative transition-transform duration-300 group-hover:scale-[1.03]"
+                  className="relative w-[84%] h-[84%] lg:w-auto lg:h-auto transition-transform duration-300 group-hover:scale-[1.03]"
                   style={{
-                    width: `${product.imageSizePx}px`,
-                    height: `${product.imageSizePx}px`,
+                    maxWidth: `${product.imageSizePx}px`,
+                    maxHeight: `${product.imageSizePx}px`,
+                    width: "84%",
+                    height: "84%",
                   }}
                 >
                   <Image
@@ -282,18 +284,18 @@ export function ProductShowcase() {
                   src={product.image}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 264px"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 264px"
                   className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                 />
               )}
             </Link>
 
             {/* Text & Promo Container (98:570): width 264px, pt-[8px] px-[8px] pb-[20px], gap-[10px] */}
-            <div className="flex flex-col w-full pt-[8px] px-[8px] pb-[20px] gap-[10px]">
+            <div className="flex flex-col justify-between flex-1 w-full pt-[4px] sm:pt-[8px] px-[4px] sm:px-[8px] pb-[12px] sm:pb-[20px] gap-[10px]">
               {/* Info Stack (98:571): width 248px, gap-[4px] */}
               <div className="flex flex-col gap-[4px]">
-                {/* Product Title (98:572): 16px/24px Bold #00171F */}
-                <h3 className="text-[16px] leading-[24px] font-bold text-[#00171F] line-clamp-2">
+                {/* Product Title (98:572): 14px/20px on mobile, 16px/24px Bold #00171F on desktop */}
+                <h3 className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold text-[#00171F] line-clamp-2">
                   <Link
                     href={`/products/${product.slug}`}
                     className="hover:text-[#003459] transition-colors"
@@ -303,7 +305,7 @@ export function ProductShowcase() {
                 </h3>
 
                 {/* Metadata Row (98:573): 12px/18px #667479, gap-[4px] */}
-                <div className="flex flex-wrap items-center gap-[4px] text-[12px] leading-[18px] text-[#667479]">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-[2px] sm:gap-[4px] text-[12px] leading-[18px] text-[#667479]">
                   <div className="inline-flex items-start gap-[6px]">
                     <span className="font-medium">Product:</span>
                     <span className="font-bold">{product.category}</span>
@@ -313,7 +315,7 @@ export function ProductShowcase() {
                     <>
                       <span
                         aria-hidden="true"
-                        className="inline-flex items-center justify-center w-[18px] h-[18px] font-medium text-[#667479]"
+                        className="hidden sm:inline-flex items-center justify-center w-[18px] h-[18px] font-medium text-[#667479]"
                       >
                         •
                       </span>
@@ -332,15 +334,15 @@ export function ProductShowcase() {
               </div>
 
               {/* Free Gift Promo Badge (Frame 49 - 98:585): 248x34, bg-[#FCEED5], rounded-[8px], pt-[6px] pb-[4px] px-[10px], gap-[2px] */}
-              <div className="flex items-center w-full h-[34px] bg-[#FCEED5] rounded-[8px] pt-[6px] pb-[4px] px-[10px] gap-[2px]">
+              <div className="flex items-center w-full h-[34px] bg-[#FCEED5] rounded-[8px] pt-[6px] pb-[4px] px-[8px] sm:px-[10px] gap-[2px]">
                 <GiftBoxIcon />
                 <span
                   aria-hidden="true"
-                  className="inline-flex items-center justify-center w-[20px] h-[20px] text-[14px] leading-[20px] font-bold text-[#003459] shrink-0"
+                  className="inline-flex items-center justify-center w-[16px] sm:w-[20px] h-[20px] text-[14px] leading-[20px] font-bold text-[#003459] shrink-0"
                 >
                   •
                 </span>
-                <span className="text-[14px] leading-[20px] font-bold text-[#002A48] truncate">
+                <span className="text-[12px] sm:text-[14px] leading-[20px] font-bold text-[#002A48] truncate">
                   {product.giftText}
                 </span>
               </div>

@@ -495,6 +495,71 @@ export function CategoryCatalog() {
       aria-labelledby="catalog-category-heading"
       className="w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-[130px] pt-[35px] pb-[60px]"
     >
+      {/* Mobile Top Sort & Filter Controls Row (Figma 108:7973 & 108:8001: Sort on left, Filter on right, above "Small Dog 52 puppies") */}
+      <div className="flex lg:hidden items-center justify-between gap-3 w-full mb-[22px]">
+        {/* Mobile Sort Dropdown (108:7973: 172x38) */}
+        <div className="relative inline-flex items-center">
+          <label htmlFor="catalog-sort-select-mobile" className="sr-only">
+            Sort by
+          </label>
+          <select
+            id="catalog-sort-select-mobile"
+            value={sortBy}
+            onChange={(e) =>
+              setSortBy(e.target.value as "popular" | "price-asc" | "price-desc")
+            }
+            className="appearance-none min-w-[172px] h-[38px] rounded-[20px] border border-[#CCD1D2] bg-transparent pl-[20px] pr-[36px] pt-[8px] pb-[6px] text-[14px] leading-[20px] font-medium text-[#667479] focus:outline-none focus:border-[#003459] cursor-pointer"
+          >
+            <option value="popular">Sort by: Popular</option>
+            <option value="price-asc">Sort by: Price Low</option>
+            <option value="price-desc">Sort by: Price High</option>
+          </select>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="pointer-events-none absolute right-[12px] w-[20px] h-[20px]"
+          >
+            <path
+              d="M8 10L12 14L16 10"
+              stroke="#667479"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+
+        {/* Mobile Filter Trigger (108:8001: Funnel Icon + "Filter" 16px/24px Bold #002A48) */}
+        <button
+          type="button"
+          onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+          className="inline-flex items-center gap-[8px] h-[38px] px-[10px] text-[16px] leading-[24px] font-bold text-[#002A48] cursor-pointer"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="w-[24px] h-[24px]"
+          >
+            <path
+              d="M4 5H20L14 12V18L10 20V12L4 5Z"
+              stroke="#002A48"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>Filter</span>
+        </button>
+      </div>
+
       {/* Top Header Row (y: 184 -> 223, 14px gap to y: 237 grid) */}
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-[20px] items-center mb-[14px]">
         {/* Left Heading: "Filter" (102:1718) */}
@@ -504,7 +569,7 @@ export function CategoryCatalog() {
           </h2>
         </div>
 
-        {/* Right Header Bar: "Small Dog" + "52 puppies" + Sort Dropdown */}
+        {/* Right Header Bar: "Small Dog" + "52 puppies" + Desktop Sort Dropdown */}
         <div className="flex flex-wrap items-center justify-between gap-4 w-full">
           <div className="flex items-baseline gap-[14px]">
             <h2
@@ -518,17 +583,8 @@ export function CategoryCatalog() {
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* Mobile Filter Trigger */}
-            <button
-              type="button"
-              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-              className="lg:hidden inline-flex items-center gap-2 h-[34px] px-4 rounded-[20px] border border-[#CCD1D2] text-[14px] leading-[20px] font-bold text-[#002A48]"
-            >
-              <span>Filter</span>
-            </button>
-
-            {/* Sort Pill Dropdown (102:1717 — "Frame 68"): 165x34, rounded-[20px], 1px solid #CCD1D2 */}
+          <div className="hidden lg:flex items-center gap-3">
+            {/* Desktop Sort Pill Dropdown (102:1717 — "Frame 68"): 165x34, rounded-[20px], 1px solid #CCD1D2 */}
             <div className="relative inline-flex items-center">
               <label htmlFor="catalog-sort-select" className="sr-only">
                 Sort by
@@ -583,16 +639,16 @@ export function CategoryCatalog() {
           {filterSidebarContent}
         </aside>
 
-        {/* Right Column: 3×5 Pet Cards Grid + Pagination */}
+        {/* Right Column: 2-Col Mobile / 3-Col Desktop Pet Cards Grid + Pagination */}
         <div className="flex flex-col w-full">
-          {/* 3-Column Pet Grid: 280x378 cards, 20px col gap, 18px row gap */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-[20px] gap-y-[18px] justify-items-center">
+          {/* Pet Grid: 2 cols on mobile (185x317, 12px gap), 3 cols on desktop (280x378, 20px col gap, 18px row gap) */}
+          <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-[12px] sm:gap-x-[20px] gap-y-[12px] sm:gap-y-[18px] justify-items-center">
             {filteredPets.map((pet) => (
               <article
                 key={pet.id}
                 className="group flex flex-col w-full max-w-[280px] lg:h-[378px] bg-[#FDFDFD] rounded-[12px] pt-[8px] px-[8px] pb-0 gap-[8px] shadow-[0px_4px_28px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0px_8px_32px_-2px_rgba(0,0,0,0.12)] transition-shadow"
               >
-                {/* Pet Photo (264x264, rounded-[10px]) */}
+                {/* Pet Photo (169x169 mobile, 264x264 desktop, rounded-[10px]) */}
                 <Link
                   href={`/pets/${pet.slug}`}
                   className="relative block w-full aspect-square lg:w-[264px] lg:h-[264px] rounded-[10px] overflow-hidden bg-[#FFFFFF] shrink-0"
@@ -601,15 +657,15 @@ export function CategoryCatalog() {
                     src={pet.image}
                     alt={pet.title}
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 264px"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1280px) 50vw, 264px"
                     className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                   />
                 </Link>
 
-                {/* Pet Info Container (width 264px, pt-[8px] px-[8px] pb-[20px], gap-[4px]) */}
-                <div className="flex flex-col w-full pt-[8px] px-[8px] pb-[20px] gap-[4px]">
-                  {/* Title: 16px/24px Bold #00171F */}
-                  <h3 className="text-[16px] leading-[24px] font-bold text-[#00171F] truncate">
+                {/* Pet Info Container */}
+                <div className="flex flex-col w-full pt-[4px] sm:pt-[8px] px-[4px] sm:px-[8px] pb-[12px] sm:pb-[20px] gap-[4px]">
+                  {/* Title: 14px/20px on mobile, 16px/24px Bold #00171F on desktop */}
+                  <h3 className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold text-[#00171F] line-clamp-2 sm:truncate">
                     <Link
                       href={`/pets/${pet.slug}`}
                       className="hover:text-[#003459] transition-colors"
@@ -618,26 +674,26 @@ export function CategoryCatalog() {
                     </Link>
                   </h3>
 
-                  {/* Gene & Age Row: 12px/18px #667479, gap-[4px] */}
-                  <div className="flex flex-wrap items-center gap-[4px] text-[12px] leading-[18px] text-[#667479]">
-                    <div className="inline-flex items-start gap-[6px]">
+                  {/* Gene & Age Row: Stacked on mobile, inline with dot on sm+ */}
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-[2px] sm:gap-[4px] text-[12px] leading-[18px] text-[#667479]">
+                    <div className="inline-flex items-start gap-[4px] sm:gap-[6px]">
                       <span className="font-medium">Gene:</span>
                       <span className="font-bold">{pet.gender}</span>
                     </div>
                     <span
                       aria-hidden="true"
-                      className="inline-flex items-center justify-center w-[18px] h-[18px] font-medium text-[#667479]"
+                      className="hidden sm:inline-flex items-center justify-center w-[18px] h-[18px] font-medium text-[#667479]"
                     >
                       •
                     </span>
-                    <div className="inline-flex items-start gap-[5px]">
+                    <div className="inline-flex items-start gap-[4px] sm:gap-[5px]">
                       <span className="font-medium">Age:</span>
                       <span className="font-bold">{pet.age}</span>
                     </div>
                   </div>
 
-                  {/* Price: 14px/20px Bold #00171F */}
-                  <p className="text-[14px] leading-[20px] font-bold text-[#00171F]">
+                  {/* Price: 16px/24px on mobile, 14px/20px Bold #00171F on desktop */}
+                  <p className="text-[14px] leading-[20px] font-bold text-[#00171F] mt-0.5 sm:mt-0">
                     {pet.price}
                   </p>
                 </div>

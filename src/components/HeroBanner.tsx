@@ -35,16 +35,16 @@ export function HeroBanner() {
         />
       </div>
 
-      {/* ================= 2. FIGMA HEADER (100px HEIGHT, px-[130px]) ================= */}
-      <header className="relative w-full h-[100px] z-30 flex items-center">
-        <div className="w-full px-4 sm:px-8 lg:px-[130px] flex items-center justify-between">
+      {/* ================= 2. FIGMA HEADER (57px Mobile / 100px Desktop, px-[130px]) ================= */}
+      <header className="relative w-full h-[57px] lg:h-[100px] z-30 flex items-center">
+        <div className="relative w-full px-4 sm:px-8 lg:px-[130px] flex items-center justify-between">
           {/* Left Cluster: Logo & Navigation Links (Figma itemSpacing: 48px) */}
           <div className="flex items-center gap-4 lg:gap-12">
             {/* Mobile Menu Button */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 -ml-2 text-[#003459] lg:hidden rounded-lg hover:bg-black/5"
+              className="p-1.5 -ml-1.5 text-[#00171F] lg:hidden rounded-lg hover:bg-black/5"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? (
@@ -54,10 +54,10 @@ export function HeroBanner() {
               )}
             </button>
 
-            {/* Official Monito Logo: 115px x 40px */}
+            {/* Official Monito Logo: 92x32 centered on mobile, 115x40 on desktop */}
             <Link
               href="/"
-              className="inline-flex items-center shrink-0"
+              className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 inline-flex items-center shrink-0"
               aria-label="Monito Pets for Best Home"
             >
               <Image
@@ -66,7 +66,7 @@ export function HeroBanner() {
                 width={115}
                 height={40}
                 priority
-                className="w-[115px] h-[40px] object-contain"
+                className="w-[92px] h-[32px] lg:w-[115px] lg:h-[40px] object-contain"
               />
             </Link>
 
@@ -89,6 +89,16 @@ export function HeroBanner() {
 
           {/* Right Cluster: Search, Join CTA & Currency (Figma itemSpacing: 14px) */}
           <div className="flex items-center gap-3.5">
+            {/* Mobile Search Icon (Figma 42:235: 23x23 on right of 57px mobile header) */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Open search"
+              className="md:hidden p-1.5 -mr-1.5 text-[#00171F] hover:text-[#003459]"
+            >
+              <Search className="w-[23px] h-[23px] stroke-[2]" />
+            </button>
+
             {/* Search Input: Exact Figma 280px x 44px, bg: #FDFDFD, icon: #667479, placeholder: #99A2A5 */}
             <form
               onSubmit={handleSearch}
@@ -115,7 +125,7 @@ export function HeroBanner() {
             </Link>
 
             {/* Currency Selector: Exact Figma Frame 44 (104px x 44px, flag 16px, VND wt:500 #002A48) */}
-            <div className="flex items-center gap-1.5 h-11 px-2 shrink-0 cursor-pointer select-none">
+            <div className="hidden lg:flex items-center gap-1.5 h-11 px-2 shrink-0 cursor-pointer select-none">
               <div className="w-4 h-4 rounded-full overflow-hidden flex items-center justify-center bg-[#D80027] relative shrink-0">
                 <svg
                   viewBox="0 0 24 24"
