@@ -19,7 +19,7 @@ export function Navbar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
+      window.location.href = `/category?q=${encodeURIComponent(searchQuery.trim())}`;
     }
   };
 
@@ -132,8 +132,19 @@ export function Navbar() {
 
       {/* Mobile Navigation Drawer */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 top-[100px] bg-black/40 backdrop-blur-xs z-50 lg:hidden animate-in fade-in duration-200">
+        <div className="fixed inset-0 top-[57px] lg:top-[100px] bg-black/40 backdrop-blur-xs z-50 lg:hidden animate-in fade-in duration-200">
           <div className="bg-[#FCEED5] p-6 shadow-2xl border-b border-black/5 space-y-4">
+            <form onSubmit={handleSearch} role="search" className="relative flex items-center w-full">
+              <Search className="absolute left-4 w-5 h-5 text-[#667479] pointer-events-none stroke-[1.75]" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search something here!"
+                aria-label="Search pets and supplies"
+                className="w-full h-11 pl-12 pr-5 bg-[#FDFDFD] text-sm text-[#242B33] placeholder:text-[#99A2A5] rounded-full shadow-xs focus:outline-none focus:ring-2 focus:ring-[#003459]/20 font-medium"
+              />
+            </form>
             <nav className="flex flex-col gap-3 font-bold text-[#003459] text-base">
               {NAV_LINKS.map((link) => (
                 <Link

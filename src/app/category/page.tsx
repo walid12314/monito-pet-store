@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { CategoryBanner } from "@/components/CategoryBanner";
@@ -18,7 +19,9 @@ export default function CategoryPage() {
     <main className="min-h-screen bg-[#FDFDFD]">
       <Navbar />
       <CategoryBanner />
-      <CategoryCatalog />
+      <Suspense fallback={<div className="min-h-[800px] max-w-[1180px] mx-auto" />}>
+        <CategoryCatalog />
+      </Suspense>
       <Footer />
     </main>
   );

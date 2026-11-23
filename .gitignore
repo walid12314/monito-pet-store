@@ -10,7 +10,6 @@
 !.yarn/releases
 !.yarn/versions
 
-.gitignore
 # testing
 /coverage
 
@@ -40,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local figma cache dumps
+figma-*.json

@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export interface CategoryPetCard {
   id: string;
@@ -282,6 +283,10 @@ function FilterCheckbox({
 }
 
 export function CategoryCatalog() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const searchQuery = searchParams.get("q")?.trim() || "";
+
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
@@ -305,6 +310,17 @@ export function CategoryCatalog() {
 
   const filteredPets = useMemo(() => {
     let result = [...CATEGORY_PETS_DATA];
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.color.toLowerCase().includes(q) ||
+          p.gender.toLowerCase().includes(q) ||
+          p.breedSize.toLowerCase().includes(q)
+      );
+    }
 
     if (selectedGenders.length > 0) {
       result = result.filter((p) => selectedGenders.includes(p.gender));
@@ -332,6 +348,7 @@ export function CategoryCatalog() {
 
     return result;
   }, [
+    searchQuery,
     selectedGenders,
     selectedColors,
     selectedBreeds,
@@ -571,7 +588,7 @@ export function CategoryCatalog() {
 
         {/* Right Header Bar: "Small Dog" + "52 puppies" + Desktop Sort Dropdown */}
         <div className="flex flex-wrap items-center justify-between gap-4 w-full">
-          <div className="flex items-baseline gap-[14px]">
+          <div className="flex flex-wrap items-baseline gap-[14px]">
             <h2
               id="catalog-category-heading"
               className="text-[24px] leading-[36px] font-bold text-[#003459]"
@@ -579,8 +596,18 @@ export function CategoryCatalog() {
               Small Dog
             </h2>
             <span className="text-[14px] leading-[20px] font-medium text-[#667479]">
-              52 puppies
+              {searchQuery ? `${filteredPets.length} results` : "52 puppies"}
             </span>
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => router.push("/category")}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FCEED5] text-[#003459] text-[12px] leading-[16px] font-bold hover:bg-[#F1D092] transition-colors cursor-pointer"
+              >
+                <span>Search: &ldquo;{searchQuery}&rdquo;</span>
+                <span aria-hidden="true">×</span>
+              </button>
+            )}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
